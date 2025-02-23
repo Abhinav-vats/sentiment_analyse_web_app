@@ -9,6 +9,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # The route() function of the Flask class is a decorator, 
 # which tells the application which URL should call 
 # the associated function.
+
+
 @app.route('/')
 def index():
     logging.info("Entered: index")
