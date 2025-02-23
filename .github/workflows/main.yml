@@ -52,7 +52,7 @@ jobs:
 
       - name: Build, tag and push docker image to ECR
         env:
-            REGISTRY: ${{ secrets.ECR_REGISTRY }}
+            REGISTRY: ${{ vars.REGISTRY }}
             REPOSITORY: sentiment-analyse-web-app
             IMAGE_TAG: latest
         run: |
