@@ -1,12 +1,14 @@
 from flask import Flask, request, render_template
-from flask_cors import CORS, cross_origin
+# from flask_cors import CORS, cross_origin
 import service
+import logging
+
 
 
 # Flask constructor takes the name of 
 # current module (__name__) as argument.
 app = Flask(__name__)
-cors = CORS(app) # allow CORS for all domains on all routes.
+# cors = CORS(app) # allow CORS for all domains on all routes.
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
@@ -15,20 +17,26 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # the associated function.
 @app.route('/')
 def index():
-
+    logging.info("Entered: index")
     user_name = "John Doe"  # Example data to pass to the template
+    logging.info("Exited: index")
 
     return render_template("index.html", name=user_name) 
 
 @app.route('/ticker')
-@cross_origin()
+# @cross_origin()
 def return_all_tickers():
+    logging.info("Entered: return_all_tickers")
+    logging.info("Exited: return_all_tickers")
     return service.get_all_tickers()
 
 @app.route('/sentiment') 
-@cross_origin()
+# @cross_origin()
 def query_example(): 
+    logging.info("Entered: query_example")
     ticker = request.args.get('ticker')
+    logging.info("Exited: query_example")
+    
     return service.get_sentiment_through_business_news(ticker=ticker)
 
 # main driver function

@@ -18,17 +18,22 @@ def get_sentiment_polarity(df):
     return df
 
 def get_stock_info(ticker):
-    stock = yf.Ticker(ticker)
-    info = stock.info
-    return {
-        'name': info.get('longName', ''),
-        'sector': info.get('sector', ''),
-        'industry': info.get('industry', ''),
-        'current_price': info.get('currentPrice', 0),
-        'market_cap': info.get('marketCap', 0),
-        'pe_ratio': info.get('forwardPE', 0),
-        'volume': info.get('volume', 0)
-    }
+    try:
+        stock = yf.Ticker(ticker)
+        print(stock)
+        info = stock.info
+        return {
+            'name': info.get('longName', ''),
+            'sector': info.get('sector', ''),
+            'industry': info.get('industry', ''),
+            'current_price': info.get('currentPrice', 0),
+            'market_cap': info.get('marketCap', 0),
+            'pe_ratio': info.get('forwardPE', 0),
+            'volume': info.get('volume', 0)
+        }
+    except Exception as e:
+        print(str(e))
+        return {}
 
 def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=10, page=1):
     # ticker = f"""news of {name}, of {sector} sector and {industry} industry, that effect the stock price"""
@@ -97,8 +102,10 @@ def get_all_tickers():
     """
     Fetches all stock tickers listed on NSE using nsepython.
     """
+    logging.info("Entered: get_all_tickers")
     tickers = nse_eq_symbols()
     tickers= [s  for s in tickers]
+    logging.info("Exited: get_all_tickers")
     return tickers
 
 def get_google_news(name, sector, industry):
@@ -122,7 +129,9 @@ def get_sentiment_through_news(ticker):
     return str(get_sentiment_polarity(df=df)[(df['polarity'] < -0.1) | (df['polarity'] > 0.1)]['polarity'].mean())
 
 def get_sentiment_through_business_news(ticker):
-    # stock_info = get_stock_info(ticker=ticker)
+    stock_info = get_stock_info(ticker=ticker)
+    logging.info("Entered: get_sentiment_through_business_news")
+
     headlines_timestamp_dict_list, timestamps = fetch_business_news(ticker=ticker)#name=stock_info['name'], sector=stock_info['sector'], industry=stock_info['industry'])
     timestamps.sort()
     timestamps.reverse()
@@ -132,4 +141,5 @@ def get_sentiment_through_business_news(ticker):
         sentiment_score = calculate_SA_Polarity(headline['headline'])
         sa_score = round(float(sentiment_score)*recency_dict[headline['timestamp']],4)
         sentiment_score_sum += sa_score
+    logging.info("Entered: get_sentiment_through_business_news")
     return str(round(float(sentiment_score_sum), 3))

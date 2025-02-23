@@ -7,7 +7,6 @@ nsepython
 numpy
 pandas
 transformers
-torch
 torchlight
-flask_cors
 feedparser
+torch

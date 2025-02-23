@@ -1,4 +1,4 @@
-FROM python:3.12
+FROM python:3.12-slim
 
 # Install dependencies for OpenCV
 RUN apt-get update && apt-get install -y \
