@@ -1,7 +1,8 @@
 import yfinance as yf
 import feedparser
 from textblob import TextBlob
-from nsepython import *
+from nsepython import nse_eq_symbols
+import pandas as pd
 import numpy as np
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import json
