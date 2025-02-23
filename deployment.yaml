@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentiment-analyse-web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentiment-analyse-web-app
+  template:
+    metadata:
+      labels:
+        app: sentiment-analyse-web-app
+    spec:
+      containers:
+      - name: sentiment-analyse-web-app
+        image: 686754180139.dkr.ecr.ap-south-1.amazonaws.com/sentiment-analyse-web-app:latest  # Updated line
+        ports:
+        - containerPort: 5000
+        env:
+        - name: FLASK-ENV
+          value: "production"

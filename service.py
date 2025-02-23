@@ -6,6 +6,7 @@ import numpy as np
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import json
 import torch
+import requests
 import torch.nn.functional as F
 import logging
 

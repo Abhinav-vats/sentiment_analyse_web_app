@@ -1,0 +1,13 @@
+logging
+Flask
+requests
+yfinance
+textblob
+nsepython
+numpy
+pandas
+transformers
+torch
+torchlight
+flask_cors
+feedparser
