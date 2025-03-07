@@ -71,3 +71,5 @@ jobs:
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
           kubectl set image deployment/sentiment-analyse-web-app sentiment-analyse-web-app=$REGISTRY/$REPOSITORY:$IMAGE_TAG --record
+          kubectl scale deployment $REPOSITORY --replicas=0
+          kubectl scale deployment $REPOSITORY --replicas=1
