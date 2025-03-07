@@ -65,7 +65,7 @@ def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=
 
         return output_lst, timestamps
     except Exception as e:
-        logging.info(str(e))
+        print(str(e))
         raise e
 
 
@@ -139,6 +139,7 @@ def get_sentiment_through_business_news(ticker):
 
     try:
         headlines_timestamp_dict_list, timestamps = fetch_business_news(ticker=ticker)#name=stock_info['name'], sector=stock_info['sector'], industry=stock_info['industry'])
+        # print(headlines_timestamp_dict_list)
         timestamps.sort()
         timestamps.reverse()
         recency_dict, weight_sum = calculate_recency_weight(timestamps=timestamps)
