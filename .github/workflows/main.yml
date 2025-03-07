@@ -70,6 +70,6 @@ jobs:
         run: |
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
-          kubectl set image deployment/sentiment-analyse-web-app sentiment-analyse-web-app=$REGISTRY/$REPOSITORY:$IMAGE_TAG --record
-          kubectl scale deployment $REPOSITORY --replicas=0
-          kubectl scale deployment $REPOSITORY --replicas=1
+          kubectl set image deployment/sentiment-analyse-web-app sentiment-analyse-web-app=686754180139.dkr.ecr.ap-south-1.amazonaws.com/sentiment-analyse-web-app:latest --record
+          kubectl scale deployment sentiment-analyse-web-app --replicas=0
+          kubectl scale deployment sentiment-analyse-web-app --replicas=1
