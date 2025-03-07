@@ -39,30 +39,33 @@ def get_stock_info(ticker):
 def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=10, page=1):
     # ticker = f"""news of {name}, of {sector} sector and {industry} industry, that effect the stock price"""
     # ticker = ticker.replace(' ', '%20')
-    url = f"https://apibs.business-standard.com/search/?type=all&limit={size}&page={page}&keyword={ticker}"
+    try:
+        url = f"https://apibs.business-standard.com/search/?type=all&limit={size}&page={page}&keyword={ticker}"
 
-    payload = {}
-    headers = {
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-site',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
-    }
+        payload = {}
+        headers = {
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-site',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+        }
 
-    response = requests.request("GET", url, headers=headers, data=payload)
+        response = requests.request("GET", url, headers=headers, data=payload)
 
-    res_dict = json.loads(response.text)
+        res_dict = json.loads(response.text)
 
-    output_lst = []
-    timestamps = []
+        output_lst = []
+        timestamps = []
 
-    for news in res_dict['data']['news']:
-        if news['sub_heading'] != "":
-            output = {'headline': news['sub_heading'], 'timestamp': news['published_date']}
-            output_lst.append(output)
-            timestamps.append(news['published_date'])
+        for news in res_dict['data']['news']:
+            if news['sub_heading'] != "":
+                output = {'headline': news['sub_heading'], 'timestamp': news['published_date']}
+                output_lst.append(output)
+                timestamps.append(news['published_date'])
 
-    return output_lst, timestamps
+        return output_lst, timestamps
+    except Exception as e:
+        raise e
 
 
 def calculate_recency_weight(timestamps):
@@ -133,14 +136,17 @@ def get_sentiment_through_business_news(ticker):
     # stock_info = get_stock_info(ticker=ticker)
     logging.info("Entered: get_sentiment_through_business_news")
 
-    headlines_timestamp_dict_list, timestamps = fetch_business_news(ticker=ticker)#name=stock_info['name'], sector=stock_info['sector'], industry=stock_info['industry'])
-    timestamps.sort()
-    timestamps.reverse()
-    recency_dict, weight_sum = calculate_recency_weight(timestamps=timestamps)
-    sentiment_score_sum = 0
-    for headline in headlines_timestamp_dict_list:
-        sentiment_score = calculate_SA_Polarity(headline['headline'])
-        sa_score = round(float(sentiment_score)*recency_dict[headline['timestamp']],4)
-        sentiment_score_sum += sa_score
-    logging.info("Entered: get_sentiment_through_business_news")
-    return str(round(float(sentiment_score_sum), 3))
+    try:
+        headlines_timestamp_dict_list, timestamps = fetch_business_news(ticker=ticker)#name=stock_info['name'], sector=stock_info['sector'], industry=stock_info['industry'])
+        timestamps.sort()
+        timestamps.reverse()
+        recency_dict, weight_sum = calculate_recency_weight(timestamps=timestamps)
+        sentiment_score_sum = 0
+        for headline in headlines_timestamp_dict_list:
+            sentiment_score = calculate_SA_Polarity(headline['headline'])
+            sa_score = round(float(sentiment_score)*recency_dict[headline['timestamp']],4)
+            sentiment_score_sum += sa_score
+        logging.info("Entered: get_sentiment_through_business_news")
+        return str(round(float(sentiment_score_sum), 3))
+    except Exception as e:
+        return str(e)
