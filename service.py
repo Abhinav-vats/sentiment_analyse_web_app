@@ -130,7 +130,7 @@ def get_sentiment_through_news(ticker):
     return str(get_sentiment_polarity(df=df)[(df['polarity'] < -0.1) | (df['polarity'] > 0.1)]['polarity'].mean())
 
 def get_sentiment_through_business_news(ticker):
-    stock_info = get_stock_info(ticker=ticker)
+    # stock_info = get_stock_info(ticker=ticker)
     logging.info("Entered: get_sentiment_through_business_news")
 
     headlines_timestamp_dict_list, timestamps = fetch_business_news(ticker=ticker)#name=stock_info['name'], sector=stock_info['sector'], industry=stock_info['industry'])
