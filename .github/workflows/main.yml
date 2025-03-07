@@ -69,3 +69,4 @@ jobs:
         run: |
           kubectl apply -f deployment.yaml
           kubectl apply -f service.yaml
+          kubectl set image deployment/sentiment-analyse-web-app sentiment-analyse-web-app=686754180139.dkr.ecr.ap-south-1.amazonaws.com/sentiment-analyse-web-app:latest --record

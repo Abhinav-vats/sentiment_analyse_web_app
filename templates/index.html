@@ -39,7 +39,7 @@
 
 
     try {
-      const response = await fetch(`${apiBaseUrl}/ticker`)
+      const response = await fetch("http://localhost:5000/ticker")
       
       const data = await response.json();
       //getRandomNames();//await response.json();
@@ -77,7 +77,7 @@
       return 0;
     }
 
-    const response = await fetch(`${apiBaseUrl}/sentiment?ticker=${val}`);
+    const response = await fetch("http://localhost:5000/sentiment?ticker="+val);
     const fltVal = Number(await response.json());
 
     return fltVal;
