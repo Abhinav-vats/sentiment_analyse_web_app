@@ -34,7 +34,7 @@ def get_stock_info(ticker):
         }
     except Exception as e:
         print(str(e))
-        return {}
+        raise e
 
 def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=10, page=1):
     # ticker = f"""news of {name}, of {sector} sector and {industry} industry, that effect the stock price"""
@@ -135,7 +135,6 @@ def get_sentiment_through_news(ticker):
     return str(get_sentiment_polarity(df=df)[(df['polarity'] < -0.1) | (df['polarity'] > 0.1)]['polarity'].mean())
 
 def get_sentiment_through_business_news(ticker):
-    # stock_info = get_stock_info(ticker=ticker)
     print("Entered: get_sentiment_through_business_news")
 
     try:
