@@ -65,6 +65,7 @@ def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=
 
         return output_lst, timestamps
     except Exception as e:
+        logging.info(str(e))
         raise e
 
 
