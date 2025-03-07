@@ -52,6 +52,7 @@ def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=
 
         response = requests.request("GET", url, headers=headers, data=payload)
         print(response.status_code)
+        print(response.text)
 
         res_dict = json.loads(response.text)
 
