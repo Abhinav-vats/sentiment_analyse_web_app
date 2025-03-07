@@ -15,26 +15,26 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def index():
-    logging.info("Entered: index")
+    print("Entered: index")
     user_name = "John Doe"  # Example data to pass to the template
-    logging.info("Exited: index")
+    print("Exited: index")
     return render_template("index.html", name=user_name) 
 
 
 @app.route('/ticker')
 @cross_origin()
 def return_all_tickers():
-    logging.info("Entered: return_all_tickers")
-    logging.info("Exited: return_all_tickers")
+    print("Entered: return_all_tickers")
+    print("Exited: return_all_tickers")
     return service.get_all_tickers()
 
 
 @app.route('/sentiment') 
 @cross_origin()
 def query_example(): 
-    logging.info("Entered: query_example")
+    print("Entered: query_example")
     ticker = request.args.get('ticker')
-    logging.info("Exited: query_example")
+    print("Exited: query_example")
     return service.get_sentiment_through_business_news(ticker=ticker)
 
 

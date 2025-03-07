@@ -51,7 +51,7 @@ def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=
         }
 
         response = requests.request("GET", url, headers=headers, data=payload)
-        print(response.text)
+        print(response.status_code)
 
         res_dict = json.loads(response.text)
 
@@ -108,10 +108,10 @@ def get_all_tickers():
     """
     Fetches all stock tickers listed on NSE using nsepython.
     """
-    logging.info("Entered: get_all_tickers")
+    print("Entered: get_all_tickers")
     tickers = nse_eq_symbols()
     tickers= [s  for s in tickers]
-    logging.info("Exited: get_all_tickers")
+    print("Exited: get_all_tickers")
     return tickers
 
 def get_google_news(name, sector, industry):
@@ -136,7 +136,7 @@ def get_sentiment_through_news(ticker):
 
 def get_sentiment_through_business_news(ticker):
     # stock_info = get_stock_info(ticker=ticker)
-    logging.info("Entered: get_sentiment_through_business_news")
+    print("Entered: get_sentiment_through_business_news")
 
     try:
         headlines_timestamp_dict_list, timestamps = fetch_business_news(ticker=ticker)#name=stock_info['name'], sector=stock_info['sector'], industry=stock_info['industry'])
@@ -149,7 +149,7 @@ def get_sentiment_through_business_news(ticker):
             sentiment_score = calculate_SA_Polarity(headline['headline'])
             sa_score = round(float(sentiment_score)*recency_dict[headline['timestamp']],4)
             sentiment_score_sum += sa_score
-        logging.info("Entered: get_sentiment_through_business_news")
+        print("Exited: get_sentiment_through_business_news")
         return str(round(float(sentiment_score_sum), 3))
     except Exception as e:
         return str(e)
