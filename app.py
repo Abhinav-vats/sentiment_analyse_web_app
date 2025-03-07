@@ -1,10 +1,12 @@
 from flask import Flask, request, render_template
+from flask_cors import CORS, cross_origin
 import service
 import logging
 
 # Flask constructor takes the name of 
 # current module (__name__) as argument.
 app = Flask(__name__)
+cors = CORS(app) 
 app.config['CORS_HEADERS'] = 'Content-Type'
 # The route() function of the Flask class is a decorator, 
 # which tells the application which URL should call 
@@ -20,7 +22,7 @@ def index():
 
 
 @app.route('/ticker')
-# @cross_origin()
+@cross_origin()
 def return_all_tickers():
     logging.info("Entered: return_all_tickers")
     logging.info("Exited: return_all_tickers")
@@ -28,7 +30,7 @@ def return_all_tickers():
 
 
 @app.route('/sentiment') 
-# @cross_origin()
+@cross_origin()
 def query_example(): 
     logging.info("Entered: query_example")
     ticker = request.args.get('ticker')

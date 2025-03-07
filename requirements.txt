@@ -10,3 +10,4 @@ transformers
 torchlight
 feedparser
 torch
+flask-cors
