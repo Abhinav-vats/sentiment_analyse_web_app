@@ -44,20 +44,21 @@ def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=
 
         payload = {}
         headers = {
+            'origin': 'https://www.business-standard.com',
+            'cache-control': 'no-cache',
             'sec-fetch-dest': 'empty',
             'sec-fetch-mode': 'cors',
             'sec-fetch-site': 'same-site',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
         }
 
-        proxies = {
-            "http": "https://92c3-2402-e280-3dfd-5a-809f-6f6b-32ec-afa7.ngrok-free.app/",
-            "https": "https://92c3-2402-e280-3dfd-5a-809f-6f6b-32ec-afa7.ngrok-free.app/"
-        }
-
-        response = requests.request("GET", url, headers=headers, data=payload, proxies=proxies)
+        response = requests.request("GET", url, headers=headers, data=payload)
         print(response.status_code)
-        print(response.text)
+        logging.error("Error: "+response.status_code)
+        logging.info("Info: "+response.status_code)
+        logging.debug("Debug: "+response.status_code)
+
+        # print(response.text)
 
         res_dict = json.loads(response.text)
 
