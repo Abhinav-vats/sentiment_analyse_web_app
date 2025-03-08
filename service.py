@@ -54,9 +54,9 @@ def fetch_business_news(ticker, size=10, page=1):#(name, sector, industry, size=
 
         response = requests.request("GET", url, headers=headers, data=payload)
         print(response.status_code)
-        logging.error("Error: "+response.status_code)
-        logging.info("Info: "+response.status_code)
-        logging.debug("Debug: "+response.status_code)
+        logging.error("Error: "+str(response.status_code))
+        logging.info("Info: "+str(response.status_code))
+        logging.debug("Debug: "+str(response.status_code))
 
         # print(response.text)
 
